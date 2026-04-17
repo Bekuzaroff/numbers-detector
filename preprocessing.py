@@ -43,5 +43,15 @@ class ImagePreprocessor:
             return e.__str__()
         
 
+    def preprocess_image(self, im_matrix):
+
+        # cvt to black/white
+        grey_im = cv.cvtColor(im_matrix, cv.COLOR_BGR2GRAY)
+        
+        grey_im = grey_im.astype(float) / 255.0 # normalization
+
+        return grey_im
+        
+
         
 
