@@ -7,11 +7,16 @@ class UnsupportedFileException(Exception):
     def __init__(self, *args):
         super().__init__(*args)
 
-class ImagePreprocessor:
+
+class CantOpenFileException(Exception):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+class Preprocessor:
     def __init__(self):
         pass
 
-    def read_im(self, im_path):        
+    def read_im(self, im_path):
         im_matr = cv.imread(im_path)
 
         if im_matr is None:
@@ -38,6 +43,14 @@ class ImagePreprocessor:
         grey_im = grey_im.astype(float) / 255.0 # normalization
 
         return grey_im
+    
+    def read_props(self, file_path):
+
+        with open(file_path, "r") as file:
+            props = file.read().split(' ')
+            file.close()
+            return props
+        
         
 
         
