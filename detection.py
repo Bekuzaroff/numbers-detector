@@ -11,8 +11,7 @@ class Detections:
         self.preprocessor = Preprocessor() # custom preprocessing class
 
     def fine_tune(self, imgs_path, anns_path):
-        img_names = os.listdir(imgs_path) # only names "image.jpg"
-        props_names = os.listdir(anns_path) # "image.txt"
+        
         return
             
 
