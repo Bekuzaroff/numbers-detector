@@ -10,21 +10,21 @@ class Detections:
     def create_data_yaml(self):
         """Создает конфигурационный файл для YOLO"""
         data_config = {
-            'path': './',  # путь к корневой папке
-            'train': 'images/train',  # папка с обучающими изображениями
-            'val': 'images/val',      # папка с валидационными изображениями
-            'nc': 1,                  # количество классов (1 - номерной знак)
-            'names': ['license_plate']  # названия классов
+            'path': './',  # path to main folder of dataset
+            'train': 'images/train',  # train images
+            'val': 'images/val',      # validation images
+            'nc': 1,                  # classes amount - 1
+            'names': ['license_plate']  # class names
         }
         
         with open('data.yaml', 'w') as f:
             yaml.dump(data_config, f)
     
     def fine_tune_model(self):
-    # Создаем конфиг
+    # creating config for yolo
         self.create_data_yaml()
         
-        # Загружаем модель
+        # loading basic model
         model = YOLO("yolov8n.pt")
         device = "cuda" if torch.cuda.is_available() else "cpu"
         print(device)
@@ -46,5 +46,5 @@ class Detections:
     def single_img_detect_number(self, im_path):
         model = YOLO("best_detector.pt") # importing trained model
 
-        result = model(im_path) 
-        return result[0].masks
+        result = model(im_path)[0]
+        return result
