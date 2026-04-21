@@ -2,5 +2,6 @@ names:
 - license_plate
 nc: 1
 path: ./
+single_cls: true
 train: images/train
 val: images/val

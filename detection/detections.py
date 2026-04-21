@@ -1,3 +1,5 @@
+import os
+
 import torch
 from ultralytics import YOLO
 import yaml
@@ -14,7 +16,8 @@ class Detections:
             'train': 'images/train',  # train images
             'val': 'images/val',      # validation images
             'nc': 1,                  # classes amount - 1
-            'names': ['license_plate']  # class names
+            'names': ['license_plate'],  # class names,
+            'single_cls': True
         }
         
         with open('data.yaml', 'w') as f:
@@ -31,7 +34,7 @@ class Detections:
         # Обучаем
         model.train(
             data='data.yaml',
-            epochs=3,
+            epochs=10,
             imgsz=640,
             batch=16,
             lr0=0.001,
@@ -43,8 +46,9 @@ class Detections:
         print("Обучение завершено!")
         return model
     
-    def single_img_detect_number(self, im_path):
+    def list_img_detector(self, im_folder):
+        image_names = os.listdir(f"./{im_folder}/")
         model = YOLO("best_detector.pt") # importing trained model
 
-        result = model(im_path)[0]
+        result = model([f'./{im_folder}/{im_name}' for im_name in image_names])
         return result
