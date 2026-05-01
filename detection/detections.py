@@ -1,5 +1,6 @@
 import os
 
+import cv2 as cv
 import torch
 from ultralytics import YOLO
 import yaml
@@ -10,7 +11,6 @@ class Detections:
         pass
 
     def create_data_yaml(self):
-        """Создает конфигурационный файл для YOLO"""
         data_config = {
             'path': './',  # path to main folder of dataset
             'train': 'images/train',  # train images
@@ -24,7 +24,7 @@ class Detections:
             yaml.dump(data_config, f)
     
     def fine_tune_model(self):
-    # creating config for yolo
+        # creating config for yolo
         self.create_data_yaml()
         
         # loading basic model
@@ -46,9 +46,27 @@ class Detections:
         print("Обучение завершено!")
         return model
     
-    def list_img_detector(self, im_folder):
+    def list_img_detector(self, model, im_folder):
         image_names = os.listdir(f"./{im_folder}/")
-        model = YOLO("best_detector.pt") # importing trained model
 
-        result = model([f'./{im_folder}/{im_name}' for im_name in image_names])
-        return result
+        results = model([f'./{im_folder}/{im_name}' for im_name in image_names])
+        return results
+    
+    def show_results(self, results):
+        if not results:
+            print("no results")
+            exit()
+        
+     
+        for i, result in enumerate(results):
+            
+            img_with_boxes = result.plot()
+            
+           
+            window_name = f"{os.path.basename(result.path)} - {len(result.boxes)} номеров"
+            cv.imshow(window_name, img_with_boxes)
+        
+        
+        print("\nНажмите любую клавишу для закрытия всех окон...")
+        cv.waitKey(0)
+        cv.destroyAllWindows()
