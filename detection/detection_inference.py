@@ -32,7 +32,6 @@ if __name__ == "__main__":
         ax.set_title(f"{os.path.basename(result.path)}: {len(result.boxes)} номеров")
         ax.axis('off')
 
-    # Если фото меньше 4, остальные скрываем
     for j in range(len(results), len(axes)):
         axes[j].axis('off')
 
