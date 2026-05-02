@@ -45,28 +45,3 @@ class Detections:
         
         print("Обучение завершено!")
         return model
-    
-    def list_img_detector(self, model, im_folder):
-        image_names = os.listdir(f"./{im_folder}/")
-
-        results = model([f'./{im_folder}/{im_name}' for im_name in image_names])
-        return results
-    
-    def show_results(self, results):
-        if not results:
-            print("no results")
-            exit()
-        
-     
-        for i, result in enumerate(results):
-            
-            img_with_boxes = result.plot()
-            
-           
-            window_name = f"{os.path.basename(result.path)} - {len(result.boxes)} номеров"
-            cv.imshow(window_name, img_with_boxes)
-        
-        
-        print("\nНажмите любую клавишу для закрытия всех окон...")
-        cv.waitKey(0)
-        cv.destroyAllWindows()
