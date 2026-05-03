@@ -18,8 +18,8 @@ if __name__ == "__main__":
     print(f"CUDA version (PyTorch): {torch.version.cuda}")
 
     model = YOLO("best_detector.pt") # best model
-    
 
+    results = model("result.jpg")
 
 
 
