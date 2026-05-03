@@ -14,7 +14,7 @@ if __name__ == '__main__':
     detection = Detections()
     model = detection.fine_tune_model()
     
-    # Тестируем на изображении
+    # Simple test
     results = model("cathedral.webp")
     results[0].show()
 
